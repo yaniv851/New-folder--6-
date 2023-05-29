@@ -10,7 +10,6 @@ app.use(express.json());
 
 // Add CORS headers middleware
 app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', 'http://127.0.0.1:5500');
   res.header('Access-Control-Allow-Origin', 'https://6474afd56b5fe21236931bb3--lucent-cuchufli-9cea17.netlify.app');
   res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
   res.header('Access-Control-Allow-Headers', 'Content-Type');
