@@ -9,9 +9,6 @@
   <title>אסטרו קואוצ’ינג</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Kalam">
   <link rel="stylesheet" href="/css/main.css" />
-  <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-  <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
-  <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
 </head>
 
 <body>
@@ -47,7 +44,10 @@
             <a href="tel:+972 54-635-2424"> צור קשר </a>
           </li>
           <li>
-            <a href="/signup.html"> הרשמה כמנוי לאתר</a>
+            <a href="https://www.youtube.com/channel/UC2IizkWREAmKjGPNUSyo0NQ"> על אסטרולוגיה</a>
+          </li>
+          <li>
+            <a href=""> הרשמה כמנוי לאתר</a>
           </li>
         </div>
         <li class="l">
@@ -209,64 +209,9 @@ v40" />
         <h3>שור</h3>
       </div>
     </div>
-
-    <div class="map-building-form-container">
-      <div class="map-building-form">
-        <div class="form-desc">
-          <h3>
-            אסטרו קואוצ’ינג » בנו מפה אסטרולוגית חינם
-          </h3>
-          <p>
-            הקלידו את פרטי הלידה המלאים שלכם בטופס ותוכלו לצפות במפה אסטרולוגית אישית מלאה הכוללת את כל הוכבים
-            והיבטי המפה.
-          </p>
-        </div>
-
-        <div class="form" dir="rtl">
-          <form id="myForm">
-            <div class="formwrap">
-              <h4>פרטי הורוסקופ</h4>
-              <hr />
-            </div>
-            <div class="form-desc">
-              <label class="custom-field one">
-                <input type="text" id="name" name="name" placeholder=" " required />
-                <span class="placeholder">שם מלא</span>
-              </label>
-              <!-- <div class="inp">
-                <label for="name">שם מלא</label>
-                <input type="text" id="name" name="name" required>
-              </div> -->
-              <div class="inp">
-                <label for="birth">תאריך לידה
-                  <input name="birth" id="Birthdate" type="date" required />
-                </label>
-              </div>
-              <div class="inp">
-                <label for="hour"> שעת לידה </label>
-                <input name="hour" id="hour" type="time" />
-              </div>
-              <div class="inphour" dir="ltr">
-                <label for="nohour" class="nohour">לא יודע את שעת הלידה שלי
-                  <input name="nohour" id="nohour" type="checkbox" />
-                  <span class="checkmark"></span>
-                </label>
-              </div>
-              <div class="inp">
-                <label for="city"> עיר לידה </label>
-                <input name="city" id="cityBirth" type="text" autocomplete="off" />
-              </div>
-            </div>
-            <div class="submit">
-              <input type="submit" value="בנה מפה">
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
   </div>
 
-  <center>
+  <center style="margin-top: 20px;">
     <img class="hide-image" id="image" src="" alt="building astrology chart..." />
     <img class="hide-image" id="image2" src="" alt="building astrology diagram..." />
   </center>
@@ -283,89 +228,53 @@ v40" />
   </footer>
 
   <script>
+    currentDate = new Date();
+    console.log(currentDate)
+    const minute = currentDate.getMinutes();
+    const hour = currentDate.getHours();
+    // Format the hour and minute with leading zeros if necessary
+    var formattedHour = hour < 10 ? '0' + hour : hour;
+    var formattedMinute = minute < 10 ? '0' + minute : minute;
+    // Create a string representation of the current time
+    var currentTime = formattedHour + ':' + formattedMinute;
+    console.log(currentTime)
+    const day = currentDate.getDate();
+    const month = currentDate.getMonth() + 1;
+    const year = currentDate.getFullYear();
+    const formattedDate = day + '-' + month + '-' + year;
+    console.log(formattedDate)
+    var image = document.getElementById('image');
+    var image2 = document.getElementById('image2');
+    image.style.display = 'block';
+    image2.style.display = 'block';
+    fetch('http://localhost:3000/api/proxy', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        'dt_birth_datedrop': formattedDate,
+        'dt_birth_timedrop': currentTime,
+        'dontknow': '',
+        'dt_birth_town': 'תל אביב, Tel Aviv, Israel, 34.78057, 32.08088, 2',
+        'formSubmit': 'בנה מפה'
+      }),
+    })
+      .then(response => response.json())
+      .then(data => {
+        // Access the src and src2 values from the response
+        // Access the src and src2 values from the response data
+        const src = data.src;
+        const src2 = data.src2;
+        console.log(src);
+        console.log(src2);
+        // Update the image sources using the obtained values
+        document.getElementById('image').src = `https://astropro.co.il/${src}`;
+        document.getElementById('image2').src = `https://astropro.co.il/${src2}`;
 
-    const birthCityInput = document.getElementById('cityBirth');
-    const birthCityInputvalue = document.getElementById('cityBirth').value;
-    var processedInput = birthCityInputvalue.replace(/ /g, '-'); // Replace all spaces with '-'
-    const username = document.getElementById("name").value;
-
-    $('#cityBirth').autocomplete({
-      source: function (request, response) {
-        const value = birthCityInput.value;
-        const modifiedValue = value.includes(" ") ? value.replace(/ /g, "-") : value;
-        console.log(modifiedValue);
-        var geoN;
-
-        fetch('http://localhost:3000/api/geolocations', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({ birthCityInput: modifiedValue })
-        })
-          .then(response => response.json())
-          .then(data => {
-            console.log(data); // Log the response from the backend
-            const geonamesArray = data.geonames;
-            const autocompleteSuggestions = geonamesArray.map(geoname => `${geoname.toponymName}, ${geoname.countryName}, ${geoname.lng} , ${geoname.lat}, ${geoname.timezone.gmtOffset}, ${geoname.name}`);
-            response(autocompleteSuggestions); // Pass suggestions to the response() function
-            console.log(autocompleteSuggestions);
-          })
-          .catch(error => {
-            console.log('Error:', error);
-          });
-      }
-    });
-
-
-    const check = document.getElementById('nohour').value
-    document.getElementById('myForm').addEventListener('submit', function (event) {
-      event.preventDefault(); // Prevent the default form submission
-      var image = document.getElementById('image');
-      var image2 = document.getElementById('image2');
-      image.style.display = 'block';
-      image2.style.display = 'block';
-
-      const name = document.getElementById("name").value;
-      const birthDate = new Date(document.getElementById("Birthdate").value);
-      const day = birthDate.getDate();
-      const month = birthDate.getMonth() + 1;
-      const year = birthDate.getFullYear();
-      const formattedDate = day + '-' + month + '-' + year;
-      console.log(formattedDate)
-      const birthHour = document.getElementById('hour').value;
-      const check = document.getElementById('nohour').value;
-      const birthTown = document.getElementById('cityBirth').value;
-
-      fetch('http://localhost:3000/api/proxy', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          'dt_firstname': name, // Replace with the desired first name
-          'dt_birth_datedrop': formattedDate,
-          'dt_birth_timedrop': birthHour,
-          'dontknow': check,
-          'dt_birth_town': birthTown,
-          'formSubmit': 'בנה מפה'
-        }),
       })
-        .then(response => response.json())
-        .then(data => {
-          // Access the src and src2 values from the response
-          // Access the src and src2 values from the response data
-          const src = data.src;
-          const src2 = data.src2;
-          console.log(src);
-          console.log(src2);
-          // Update the image sources using the obtained values
-          document.getElementById('image').src = `https://astropro.co.il/${src}`;
-          document.getElementById('image2').src = `https://astropro.co.il/${src2}`;
+      .catch(error => console.error(error));
 
-        })
-        .catch(error => console.error(error));
-    });
   </script>
 </body>
 

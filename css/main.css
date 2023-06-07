@@ -1,4 +1,7 @@
-* {
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
@@ -18,10 +21,17 @@
   color: white;
 }
 
+.header .first1 {
+  position: absolute;
+  top: 5%;
+  right: 5%;
+  font-size: 25px;
+}
 .header .first {
   position: absolute;
   top: 5%;
   right: 5%;
+  font-family: 'Kalam';
 }
 
 .header .second {
@@ -59,8 +69,15 @@
   margin: 10px;
 }
 
-.navbar ul .ind li a {
+.navbar ul .und li a {
   text-decoration: none;
+  color: #393857;
+}
+.navbar ul li a:visited {
+  color: #393857;
+}
+.navbar ul .und li a:visited {
+  color: #393857;
 }
 
 .mazalot {
@@ -82,11 +99,11 @@
   justify-content: space-evenly;
   transition: 1s;
   border-radius: 10px;
-  box-shadow: 0 1px 1px rgba(0,0,0,0.12), 
-  0 2px 2px rgba(0,0,0,0.12), 
-  0 4px 4px rgba(0,0,0,0.12), 
-  0 8px 8px rgba(0,0,0,0.12),
-  0 16px 16px rgba(0,0,0,0.12);
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.12),
+    0 2px 2px rgba(0, 0, 0, 0.12),
+    0 4px 4px rgba(0, 0, 0, 0.12),
+    0 8px 8px rgba(0, 0, 0, 0.12),
+    0 16px 16px rgba(0, 0, 0, 0.12);
 }
 
 .mazal-boded svg {
@@ -96,8 +113,52 @@
 
 .mazal-boded:hover {
   scale: 1.1;
+  color: #393857;
   transition: 1s;
 }
+
+.mazal-boded svg path{
+  transition: 1s;
+}
+.mazal-boded svg polyline{
+  transition: 1s;
+}
+.mazal-boded svg polygon{
+  transition: 1s;
+}
+.mazal-boded svg circle{
+  transition: 1s;
+}
+.mazal-boded svg line{
+  transition: 1s;
+}
+
+.mazal-boded:hover svg path{
+  stroke: #393857;
+  stroke-width: 3;
+  transition: 1s;
+}
+.mazal-boded:hover svg polyline{
+  stroke: #393857;
+  stroke-width: 3;
+  transition: 1s;
+}
+.mazal-boded:hover svg polygon{
+  stroke: #393857;
+  stroke-width: 3;
+  transition: 1s;
+}
+.mazal-boded:hover svg circle{
+  stroke: #393857;
+  stroke-width: 3;
+  transition: 1s;
+}
+.mazal-boded:hover svg line{
+  stroke: #393857;
+  stroke-width: 3;
+  transition: 1s;
+}
+
 
 .map-building-form-container {
   display: flex;
@@ -119,41 +180,239 @@
   margin-bottom: 10px;
 }
 
-.map-building-form .form{
+.map-building-form .form {
   margin-top: 5px;
 }
 
-.map-building-form .form .formwrap{
+.map-building-form .form .formwrap {
   text-align: start;
   margin-bottom: 5px;
 }
 
-.map-building-form .form .form-desc{
+.map-building-form .form .form-desc {
   display: flex;
   flex-direction: column;
   align-items: start;
 }
 
-.map-building-form .form .form-desc .inp{
+.map-building-form .form .form-desc .inp {
   display: flex;
   flex-direction: row;
 }
 
-.map-building-form .form .form-desc .inp input{
+.map-building-form .form .form-desc .inphour {
+  display: flex;
+  flex-direction: row;
+}
+
+.map-building-form .form .form-desc .inphour:hover input~.checkmark {
+  background-color: #ccc;
+  transition: 1s;
+}
+
+.map-building-form .form .form-desc .inphour input:checked~.checkmark {
+  background-color: #2196F3;
+}
+
+.map-building-form .form .form-desc .inphour .checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+.map-building-form .form .form-desc .inphour input:checked~.checkmark:after {
+  display: block;
+}
+
+.map-building-form .form .form-desc .inphour .checkmark:after {
+  left: 9px;
+  top: 5px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
+.custom-field.one input {
+  background: none;
+  border: 2px solid #ddd;
+  transition: border-color 0.3s ease;
+  outline: none;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  /* for removing the highlight */
+}
+
+.custom-field.one input+.placeholder {
+  right: 8px;
+  padding: 0 5px;
+}
+
+.custom-field.one input.dirty,
+.custom-field.one input:not(:placeholder-shown),
+.custom-field.one input:focus {
+  border-color: #222;
+  background-color: white;
+  transition-delay: 0.1s
+}
+
+.custom-field.one input.dirty+.placeholder,
+.custom-field.one input:not(:placeholder-shown)+.placeholder,
+.custom-field.one input:focus+.placeholder {
+  top: 0;
+  font-size: 10px;
+  color: white;
+  background: #2281D2;
+  border-radius: 10px;
+  width: auto
+}
+
+.custom-field {
+  cursor: pointer;
+  position: relative;
+  font-size: 14px;
+  border-top: 20px solid transparent;
+  margin-bottom: 5px;
+  display: inline-block;
+  --field-padding: 12px;
+  -webkit-tap-highlight-color: transparent;
+  /* for removing the highlight */
+}
+
+.custom-field input {
+  border: none;
+  -webkit-appearance: none;
+  -ms-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background: #f2f2f2;
+  padding: var(--field-padding);
+  border-radius: 3px;
+  width: 250px;
+  outline: none;
+  font-size: 14px;
+}
+
+
+.custom-field .placeholder {
+  position: absolute;
+  right: var(--field-padding);
+  width: calc(100% - (var(--field-padding) * 2));
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  top: 22px;
+  line-height: 100%;
+  transform: translateY(-50%);
+  color: #fff;
+  transition:
+    top 0.3s ease,
+    color 0.3s ease,
+    font-size 0.3s ease;
+}
+
+.custom-field input.dirty+.placeholder,
+.custom-field input:focus+.placeholder,
+.custom-field input:not(:placeholder-shown)+.placeholder {
+  top: -10px;
+  font-size: 10px;
+  color: #222;
+}
+
+.custom-field .error-message {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  padding: 0 8px;
+  font-size: 12px;
+  background: #d30909;
+  color: #fff;
+  height: 24px;
+}
+
+.custom-field .error-message:empty {
+  opacity: 0;
+}
+
+
+.map-building-form .form .form-desc .inphour input {
+  border: none;
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.map-building-form .form .form-desc .inphour .checkmark {
+  position: absolute;
+  /* top: 0; */
+  /* left: 0; */
+  height: 25px;
+  width: 25px;
+  margin-left: 10px;
+  border-radius: 100%;
+  background-color: #eee;
+  transition: 1s;
+}
+
+.map-building-form .form .form-desc .inp input {
   border-radius: 5px;
   border: none;
   margin-bottom: 5px;
+  -webkit-tap-highlight-color: transparent;
+  /* for removing the highlight */
 }
 
-.map-building-form .form .form-desc .inp input:focus{
+.map-building-form .form .form-desc .inp input:focus {
   outline: none;
 }
 
-.map-building-form .form .form-desc .inp label{
+.map-building-form .form .form-desc .inp label {
   margin-left: 10px;
 }
 
-.map-building-form .form form input[type="submit"]  {
+.map-building-form .form .form-desc .inphour label {
+  margin-left: 10px;
+}
+
+.map-building-form .form .form-desc .inphour .nohour {
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 20px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+input[type="date"] {
+  background-color: white;
+  padding: 10px;
+  font-family: "Roboto Mono", monospace;
+  color: black;
+  font-size: 18px;
+  border: none;
+  outline: none;
+  border-radius: 5px;
+  -webkit-tap-highlight-color: transparent;
+  /* for removing the highlight */
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+  background-color: #ffffff;
+  padding: 5px;
+  cursor: pointer;
+  border-radius: 3px;
+}
+
+.map-building-form .form form input[type="submit"] {
   background-color: #2281D2;
   border: none;
   color: white;
@@ -163,38 +422,64 @@
   margin-bottom: 5px;
   border-bottom: #f2f9fd 2px solid;
   transition: 1s;
+  -webkit-tap-highlight-color: transparent;
+  /* for removing the highlight */
 }
 
-.map-building-form .form form input[type="submit"]:hover{
+.map-building-form .form form input[type="submit"]:hover {
   scale: 1.1;
   background: white;
   border-radius: 10px;
   color: #2281D2;
-  box-shadow: 0 1px 1px rgba(0,0,0,0.12), 
-  0 2px 2px rgba(0,0,0,0.12), 
-  0 4px 4px rgba(0,0,0,0.12), 
-  0 8px 8px rgba(0,0,0,0.12),
-  0 16px 16px rgba(0,0,0,0.12);
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.12),
+    0 2px 2px rgba(0, 0, 0, 0.12),
+    0 4px 4px rgba(0, 0, 0, 0.12),
+    0 8px 8px rgba(0, 0, 0, 0.12),
+    0 16px 16px rgba(0, 0, 0, 0.12);
   transition: 1s;
 }
 
-#image{
+.autocomplete-popup {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  max-height: 200px;
+  overflow-y: auto;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 999;
+}
+
+
+#image {
   width: 400px;
   height: 400px;
   margin-bottom: 10px;
 }
 
-#image2{
+#image2 {
   width: 700px;
   height: 300px;
   object-fit: contain;
   margin-bottom: 10px;
 }
 
-.hide-image{
+.hide-image {
   display: none;
 }
 
+.social-links{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.social-links i{
+  margin-right: 5px;
+}
 
 @media (max-width: 720px) {
   .navbar ul .und li {
@@ -219,7 +504,7 @@
     font-size: 10px;
   }
 
-  .map-building-form{
+  .map-building-form {
     width: 80%;
   }
 
@@ -235,9 +520,57 @@
     font-size: medium;
   }
 
-  .map-building-form .form-desc p{
+  .map-building-form .form-desc p {
     font-size: x-small;
     margin-top: 2px;
     width: 80%;
+  }
+}
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+  .header .first1 {
+    -webkit-text-stroke: #222 0.7px;
+  }
+  .header .first {
+    -webkit-text-stroke: #222 0.7px;
+  }
+
+  .header .second {
+    -webkit-text-stroke: #222 1px;
+  }
+
+  .mazal-boded {
+    margin-right: 5px;
+  }
+
+  .navbar ul li a{
+    font-size: 9px;
+    font-weight: bold;
+  }
+
+  .custom-field input{
+    width: 150px;
+  }
+
+  input[type="date"]{
+    padding: 5px;
+  }
+  .map-building-form .form .form-desc .inphour .nohour{
+    font-size: 15px;
+  }
+
+  .map-building-form .form .form-desc .inphour .checkmark{
+    height: 15px;
+    width: 15px;
+  }
+}
+
+@media only screen and (max-width: 325px) {
+
+  .map-building-form .form .form-desc {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 }
